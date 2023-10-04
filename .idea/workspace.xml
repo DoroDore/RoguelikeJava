@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="631af1bf-2ad3-4db6-8583-4191ef483fcb" name="Changes" comment="Version -1.2, refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Dialogue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Dialogue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Weapon.java" afterDir="false" />
-    </list>
+    <list default="true" id="631af1bf-2ad3-4db6-8583-4191ef483fcb" name="Changes" comment="Version 1.0, First version of the game, mobs, weapons, and rewards." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,13 +70,22 @@
       <option name="project" value="LOCAL" />
       <updated>1694954420231</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Version 1.0, First version of the game, mobs, weapons, and rewards.">
+      <option name="closed" value="true" />
+      <created>1696423896219</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1696423896219</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Version -1.0, unfinished code structure" />
     <MESSAGE value="Version -1.1, added attacking structure, monster priming, weapons, and battle system." />
     <MESSAGE value="Version -1.2, refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version -1.2, refactor" />
+    <MESSAGE value="Version 1.0, First version of the game, mobs, weapons, and rewards." />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.0, First version of the game, mobs, weapons, and rewards." />
   </component>
 </project>
