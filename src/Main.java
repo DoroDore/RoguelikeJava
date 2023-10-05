@@ -67,7 +67,7 @@ public class Main {
         weapon = new Weapon("Sagewood Staff", 3, 5,10);
         gWeaponMap.put("sagewoodStaff", weapon);
         weapon = new Weapon ("Iron Sword", 9, 0, 5);
-        gWeaponMap.put("ironSword", weapon);1
+        gWeaponMap.put("ironSword", weapon);
         gCurrentWeapon = gWeaponMap.get("sharpenedStick");
     }
     private static void rewards() {
@@ -111,10 +111,6 @@ public class Main {
             Scanner userChoice = new Scanner(System.in);
             String userInput;
             userInput = userChoice.next();
-            switch (userInput) {
-                case 1:
-                    //Some stuff happens here
-            }
         }
     }
     private static void createEnemies() {

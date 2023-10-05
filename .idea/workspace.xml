@@ -20,6 +20,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "DoroDore"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e72309f5-c169-49ca-aae0-a944a25cb424" />
+        <option name="url" value="https://github.com/DoroDore/RoguelikeJava.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -78,7 +92,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696423896219</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Version 1.0, First version of the game, mobs, weapons, and rewards.">
+      <option name="closed" value="true" />
+      <created>1696423928594</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1696423928594</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
