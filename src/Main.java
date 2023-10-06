@@ -13,7 +13,9 @@ public class Main {
     private static int gBaseATK = 3;
     private static int gBaseMATK = 3;
     private static int gBaseHP = 20;
+    private static int gMaxHP = 20;
     private static int gBaseMana = 10;
+    private static int gMaxMana = 10;
     private static int gLevel = 1;
     private static int innerPeace = 0;
     private static Weapon gCurrentWeapon;
@@ -46,13 +48,11 @@ public class Main {
                 rewards();
                 wave = wave + 1;
                 changeEnemy();
-                System.out.println("Satisfied, you continue your journey.");
-                Dialogue.stall();
-                System.out.println("Before long, another enemy stops to block your path.");
-                Dialogue.stall();
-                System.out.println("You encountered " + genName + "!");
-                Dialogue.stall();
-                System.out.println("\n\n\n\n\n------------------------------");
+                double result = Dialogue.prefightDialogue();
+                if (result == 5.1) {
+                    System.out.print("The Stone Sentry starts with 10 damage!");
+                    genHP = genHP - 10;
+                }
             }
         }
         Dialogue.death();
@@ -94,7 +94,10 @@ public class Main {
                 gLevel = gLevel+1;
                 gBaseATK = gBaseATK + 1;
                 gBaseMATK = gBaseMATK + 1;
-                gBaseHP = 25;
+                gMaxHP = gMaxHP + 5;
+                gBaseHP = gMaxHP;
+                gMaxMana = gMaxMana + 5;
+                gBaseMana = gMaxMana;
             }
             else {
                 System.out.println("You take a rare opportunity to take a break and relax");
@@ -107,10 +110,34 @@ public class Main {
             Dialogue.stall();
             System.out.println("What do you want to do?");
             Dialogue.stall();
-            System.out.println("[1] Reactivate the rune (-10MP)\t[2] Destroy the rune\t[3] Ignore the rune");
+            System.out.println("[1] Reactivate the rune\t[2] Destroy the rune\t[3] Ignore the rune");
             Scanner userChoice = new Scanner(System.in);
-            String userInput;
-            userInput = userChoice.next();
+            int userInput;
+            userInput = userChoice.nextInt();
+            if (userInput == 1) {
+                Dialogue.wave3Reward1();
+                gBaseMATK = gBaseMATK + 3;
+            }
+            else if (userInput == 2) {
+                Dialogue.wave3Reward2();
+                gBaseATK = gBaseATK + 3;
+            }
+            else if (userInput == 3) {
+                System.out.println("Shrugging, you ignore the rune.");
+                Dialogue.stall();
+                System.out.println("You feel inner peace.");
+                innerPeace = innerPeace +1;
+            }
+        }
+        if (wave == 4) {
+            Dialogue.wave4Dialogue();
+            gLevel = gLevel+1;
+            gBaseATK = gBaseATK + 1;
+            gBaseMATK = gBaseMATK + 1;
+            gMaxHP = gMaxHP + 5;
+            gBaseHP = gMaxHP;
+            gMaxMana = gMaxMana + 5;
+            gBaseMana = gMaxMana;
         }
     }
     private static void createEnemies() {
@@ -120,6 +147,10 @@ public class Main {
         gEnemyMap.put("redSlime", enemy);
         enemy = new Enemy("Iridescent Slime", 8, 25);
         gEnemyMap.put("iridescentSlime", enemy);
+        enemy = new Enemy("Rocky", 6, 40);
+        gEnemyMap.put("rocky", enemy);
+        enemy = new Enemy("Stone Sentry", 10, 30);
+        gEnemyMap.put("stoneSentry", enemy);
         gCurrentEnemy = gEnemyMap.get("blueSlime");
     }
     private static void changeEnemy() {
@@ -128,6 +159,12 @@ public class Main {
         }
         if (wave == 3) {
             gCurrentEnemy = gEnemyMap.get("iridescentSlime");
+        }
+        if (wave == 4) {
+            gCurrentEnemy = gEnemyMap.get("rocky");
+        }
+        if (wave == 5) {
+            gCurrentEnemy = gEnemyMap.get("stoneSentry");
         }
         genName = gCurrentEnemy.getName();
         genMAttack = gCurrentEnemy.getAttack();
@@ -195,7 +232,7 @@ public class Main {
                     System.out.println("You cast heal!");
                     gBaseHP = gBaseHP + add(wpMAttack,gBaseMATK)*2;
                     Dialogue.stall();
-                    System.out.println("You healed " + gLevel*10 + " HP!");
+                    System.out.println("You healed " + add(wpMAttack,gBaseMATK)*2 + " HP!");
                     gBaseMana = gBaseMana - 10;
                     Dialogue.stall();
                     return;
@@ -223,6 +260,27 @@ public class Main {
                 return;
             }
         }
+        if (genName.equals("Rocky")) {
+            Random attackChoice = new Random();
+            int chance = attackChoice.nextInt(5)+1;
+            if (chance == 1) {
+                System.out.println("The " + genName + "uses Bulldose!");
+                Dialogue.stall();
+                System.out.println("You took " + genHP/2 + " damage...");
+                gBaseHP = gBaseHP - genHP/2;
+                return;
+            }
+            if (chance == 2) {
+                System.out.println("The " + genName + " uses Self Destruct!");
+                Dialogue.stall();
+                System.out.println("The Rocky exploded!");
+                Dialogue.stall();
+                System.out.println("You took 15 damage...");
+                gBaseHP = gBaseHP - 15;
+                genHP = 0;
+                return;
+            }
+        }
         System.out.println("The " + genName + " attacks!");
         Dialogue.stall();
         System.out.println("You took " + genAttack + " damage...");
@@ -234,5 +292,11 @@ public class Main {
     }
     public static int getPeace() {
         return innerPeace;
+    }
+    public static int getWave() {
+        return wave;
+    }
+    public static String getGenName () {
+        return genName;
     }
 }

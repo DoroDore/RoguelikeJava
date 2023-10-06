@@ -94,4 +94,77 @@ public class Dialogue {
     public static void enemyDefeated() {
 
     }
+    public static void wave3Reward1() {
+        System.out.println("Closing your eyes, you place your hand to the stone.");
+        stall();
+        System.out.println("As you channel mana into the stone, you see a blue glow resonate from the stone, and you feel power flood through your body.");
+        stall();
+        System.out.println("Your Magic Attack increased by 3!");
+        stall();
+    }
+    public static void wave3Reward2() {
+        System.out.println("Nabbing the stone, you toss it to the ground before crushing it with your foot.");
+        stall();
+        System.out.println("Beneath your foot, you see a red light erupt, completely blinding you.");
+        stall();
+        System.out.println("When the light subsides, you feel your body coursing with raw power.");
+        stall();
+        System.out.println("Your Attack increased by 3!");
+        stall();
+    }
+    public static void wave4Dialogue() {
+        System.out.println("As you continue your journey, you notice the trees around you eventually thin.");
+        stall();
+        System.out.println("Taking a final step, you realize you've escaped the strange forest.");
+        stall();
+        System.out.println("Scratching your head, you're not sure what to do until you see a temple in the distance.");
+        stall();
+        System.out.println("Grabbing your weapon, you heave yourself up and head towards the mysterious structure.");
+        stall();
+        System.out.println("As you walk, you take the time to relax and restore your energy.");
+        stall();
+        System.out.println("Your stats have been restored");
+        stall();
+        System.out.println("You've leveled up!");
+    }
+    public static double prefightDialogue() {
+        if (Main.getWave() == 1 || Main.getWave() == 2 || Main.getWave() == 3 || Main.getWave() == 4) {
+            System.out.println("Satisfied, you continue your journey.");
+            Dialogue.stall();
+            System.out.println("Before long, another enemy stops to block your path.");
+            Dialogue.stall();
+            System.out.println("You encountered " + Main.getGenName() + "!");
+            Dialogue.stall();
+            System.out.println("\n\n\n\n\n------------------------------");
+            return 0;
+        }
+        if (Main.getWave() == 5) {
+            System.out.println("As you walk into the temple, you notice a figure-like stone structure guarding the temple");
+            stall();
+            System.out.println("Unsure of what it does, you just stand there.");
+            stall();
+            boolean validAnswer = false;
+            while (!validAnswer) {
+                System.out.println("What do you want to do?");
+                stall();
+                System.out.println("[1] Attack the statue\t[2] Tap the statue\t[3] Ignore the statue");
+                Scanner scanner = new Scanner(System.in);
+                int userInput = scanner.nextInt();
+                if (userInput == 1) {
+                    validAnswer = true;
+                    System.out.println("You raise your weapon high before swinging it down on the stone structure");
+                    stall();
+                    System.out.println("With a start, the robot whirls to life.");
+                    return 5.1;
+                }
+                if (userInput == 2) {
+                    System.out.println("Some stuff for input 2");
+                }
+                if (userInput == 3) {
+                    System.out.println("Some stuff for input 3");
+                }
+            }
+        }
+        return 0;
+    }
 }
