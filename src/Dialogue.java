@@ -18,6 +18,10 @@ public class Dialogue {
             System.out.println("Bacon Detected");
             System.out.println("Well, let us embark on a new journey... \n\n\n\n\n------------------------------");
         }
+        else if (name.equals("Ben")) {
+            System.out.println("Nah, you're Nate");
+            System.out.println("What a clown... \n\n\n\n\n------------------------------");
+        }
         else {
             System.out.println("I see. Your name is " + name + ". Well, let us embark on a new journey...\n\n\n\n\n------------------------------");
         }
@@ -143,27 +147,90 @@ public class Dialogue {
             stall();
             System.out.println("Unsure of what it does, you just stand there.");
             stall();
-            boolean validAnswer = false;
-            while (!validAnswer) {
+            while (true) {
                 System.out.println("What do you want to do?");
                 stall();
                 System.out.println("[1] Attack the statue\t[2] Tap the statue\t[3] Ignore the statue");
                 Scanner scanner = new Scanner(System.in);
                 int userInput = scanner.nextInt();
                 if (userInput == 1) {
-                    validAnswer = true;
                     System.out.println("You raise your weapon high before swinging it down on the stone structure");
                     stall();
                     System.out.println("With a start, the robot whirls to life.");
                     return 5.1;
                 }
                 if (userInput == 2) {
-                    System.out.println("Some stuff for input 2");
+                    System.out.println("Learning over, you tap the stone structure on what could be classified as it's shoulder");
+                    stall();
+                    System.out.println("Suddenly, the stone structure starts humming");
+                    stall();
+                    System.out.println("StoneGUARD V2.3 [Operation Level: FULL FUNCTION] | [Battery: REPAIR REQUIRED]");
+                    stall();
+                    System.out.println("The robot doesn't seem to have noticed you yet.");
+                    stall();
+                    while (true) {
+                        System.out.println("What do you want to do?");
+                        System.out.println("[1] Attack the sentry\t[2] Try talking to the sentry\t[3] Sneak past the sentry");
+                        userInput = scanner.nextInt();
+                        if (userInput == 1) {
+                            System.out.println("Raising your weapon, you swing it down at the sentry, only for it to be blocked by a mechanical arm.");
+                            stall();
+                            System.out.println("Leaping back, you brace yourself for a fight.");
+                            return 0;
+                        }
+                        if (userInput == 2) {
+                            System.out.println("You try talking to the sentry");
+                            stall();
+                            System.out.println("Stone Sentry: \"Unregistered entity detected [Database: Null]\"");
+                            stall();
+                            System.out.println("Suddenly, the Stone Sentry starts making a whirring noise and steam starts coming out of it's joints.");
+                            stall();
+                            while (true) {
+                                System.out.println("What do you want to do?");
+                                System.out.println("[1] Attack the sentry\t[2] Try to logic the sentry (Level Check)");
+                                userInput = scanner.nextInt();
+                                if (userInput == 1) {
+                                    System.out.println("Raising your weapon, you swing it down at the sentry, only for it to be blocked by a mechanical arm.");
+                                    stall();
+                                    System.out.println("Leaping back, you brace yourself for a fight.");
+                                    return 0;
+                                }
+                                if (userInput == 2) {
+                                    if (Main.getLevel() >= 3) {
+                                        System.out.println("As the robot continues to whir, you think hard about how to stop it.");
+                                        stall();
+                                        System.out.println("Suddenly, you're brain is filled with mysterious knowledge, and the engineering of the sentry seems clear as day");
+                                        stall();
+                                        System.out.println("With the raise of your finger, you utter \"StoneGuard, configure, friendlyUnit, add, register!\"");
+                                        stall();
+                                        System.out.println("To your surprise, the robot stops whirring.");
+                                        stall();
+                                        System.out.println("Shrugging to yourself, you just walk past the robot, which stands next to you obediently");
+                                        return 5.2;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
                 if (userInput == 3) {
-                    System.out.println("Some stuff for input 3");
+                    System.out.println("You try sneaking past the sentry...");
+                    stall();
+                    System.out.println("Suddenly, you hear a loud sound behind you: ENEMY DETECTED [Loading Combat Ver 5DX]");
+                    stall();
+                    System.out.println("You've been ambushed by the sentry!");
+                    return 5.3;
+                }
+                else {
+                    System.out.println("PLease input a valid answer");
                 }
             }
+        }
+        if (Main.getWave() == 6) {
+            Dialogue.stall();
+            System.out.println("As you continue adventuring however, your path is eventually blocked.");
+            return 0;
         }
         return 0;
     }
