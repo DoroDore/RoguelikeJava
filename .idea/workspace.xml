@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="631af1bf-2ad3-4db6-8583-4191ef483fcb" name="Changes" comment="Version 1.1, Rocky + Beginning of Temple Arc">
+    <list default="true" id="631af1bf-2ad3-4db6-8583-4191ef483fcb" name="Changes" comment="Version 1.2, Temple Arc, new spells!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Dialogue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Dialogue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Weapon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +76,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696589274411</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Version 1.2, Temple Arc, new spells!">
+      <option name="closed" value="true" />
+      <created>1696681806117</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1696681806117</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -83,6 +92,7 @@
     <MESSAGE value="Version 1.0, First version of the game, mobs, weapons, and rewards." />
     <MESSAGE value="Version 1.0, first playable game" />
     <MESSAGE value="Version 1.1, Rocky + Beginning of Temple Arc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.1, Rocky + Beginning of Temple Arc" />
+    <MESSAGE value="Version 1.2, Temple Arc, new spells!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.2, Temple Arc, new spells!" />
   </component>
 </project>

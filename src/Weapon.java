@@ -2,12 +2,14 @@ public class Weapon {
     private int mWeaponAttack;
     private int mWeaponMana;
     private int mWeaponMAttack;
+    private int mWeaponDefense;
     private String mWeaponName;
-    public Weapon(String wpName, int wpAttack, int wpMAttack, int wpMana) {
+    public Weapon(String wpName, int wpAttack, int wpMAttack, int wpMana, int wpDefense) {
         mWeaponName = wpName;
         mWeaponAttack = wpAttack;
         mWeaponMAttack = wpMAttack;
         mWeaponMana = wpMana;
+        mWeaponDefense = wpDefense;
     }
     public void someMethod(Weapon weaponInstance) {
         int wpATK = weaponInstance.mWeaponAttack;
@@ -28,4 +30,7 @@ public class Weapon {
         return mWeaponName;
     }
     public int getWeaponMagicAttack() {return mWeaponMAttack;}
+    public int getWeaponDefense() {
+        return mWeaponDefense;
+    }
 }

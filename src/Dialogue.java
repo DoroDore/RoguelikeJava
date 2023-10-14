@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Dialogue {
-    public static void introduction () {
+    public static int introduction () {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome adventurer to the text based version of Roguelike Adventures!");
         System.out.println("Before we begin, what is your name?");
@@ -18,9 +18,13 @@ public class Dialogue {
             System.out.println("Bacon Detected");
             System.out.println("Well, let us embark on a new journey... \n\n\n\n\n------------------------------");
         }
-        else if (name.equals("Ben")) {
+        else if (name.equals("ben")) {
             System.out.println("Nah, you're Nate");
             System.out.println("What a clown... \n\n\n\n\n------------------------------");
+        }
+        else if (name.equals("www")) {
+            System.out.println("Speedrun mode activated.");
+            return 1;
         }
         else {
             System.out.println("I see. Your name is " + name + ". Well, let us embark on a new journey...\n\n\n\n\n------------------------------");
@@ -67,10 +71,12 @@ public class Dialogue {
             stall();
             System.out.println("Well, that more or less sums up the rules! Press enter to continue.");
             stall();
+            return 0;
         }
         else {
             System.out.println("Very well. We shall begin.");
             stall();
+            return 0;
         }
     }
     public static void stall () {
@@ -116,6 +122,20 @@ public class Dialogue {
         System.out.println("Your Attack increased by 3!");
         stall();
     }
+    public static void buyajiReward() {
+        System.out.println("With a final attack, you strike down Buyaji.");
+        stall();
+        System.out.println("Buyaji, enraged, lets out a final roar of anger before toppling to the floor, causing the entire floor to shake.");
+        stall();
+        System.out.println("Exhausted, you can't help but fall to the floor, realizing the magnitude of the feat you've just accomplished.");
+        stall();
+        System.out.println("Then, suddenly, Buyaji's body starts contorting and twisting. Suddenly on edge, you force yourself back up, weakly grabbing your weapon");
+        stall();
+        System.out.println("Then, Buyaji's body explodes.");
+        stall();
+        System.out.println("In the ruin of Buyaji's body lies three items.");
+        stall();
+    }
     public static void wave4Dialogue() {
         System.out.println("As you continue your journey, you notice the trees around you eventually thin.");
         stall();
@@ -140,7 +160,7 @@ public class Dialogue {
             System.out.println("You encountered " + Main.getGenName() + "!");
             Dialogue.stall();
             System.out.println("\n\n\n\n\n------------------------------");
-            return 0;
+            return Main.getWave();
         }
         if (Main.getWave() == 5) {
             System.out.println("As you walk into the temple, you notice a figure-like stone structure guarding the temple");
@@ -228,9 +248,136 @@ public class Dialogue {
             }
         }
         if (Main.getWave() == 6) {
-            Dialogue.stall();
+            stall();
             System.out.println("As you continue adventuring however, your path is eventually blocked.");
-            return 0;
+            return 6;
+        }
+        if (Main.getWave() == 7) {
+            System.out.println("Having chosen a book, you watch in shock as the other two disintegrate before your eyes");
+            stall();
+            System.out.println("You shrug, figuring that you at least got something from the temple. Turning around, you prepare to leave.");
+            stall();
+            System.out.println("However, right as you're able to step out of the central chamber, a gate suddenly comes crashing down, narrowly missing your feet and barring you from exit.");
+            stall();
+            while (true) {
+                System.out.println("What do you want to do?");
+                System.out.println("[1] Try breaking the gate (ATK Check)\t[2] Try to figure your way out (MATK Check)\t[3] Do nothing");
+                Scanner scanner = new Scanner(System.in);
+                int userInput = scanner.nextInt();
+                if (userInput == 1) {
+                    if (Main.getTotalAttack() >= 10) {
+                        System.out.println("Bracing your body, you ram into the gate shoulder first, and stumble forward as you realize the old gate gave way.");
+                        stall();
+                        System.out.println("When the smoke finally clears, you smile seeing that the exit to the temple is just down the hallway.");
+                        stall();
+                        System.out.println("Sprinting down the hallway, you're just about to exit, when a huge mechanical worm stops your path");
+                        stall();
+                        System.out.println("Stumbling backwards in shock, you can help but tremble at the strength of the enemy before you.");
+                        stall();
+                        System.out.println("You've encountered Buyaji, Eater of Worlds!");
+                        return 7.1;
+                    }
+                    else {
+                        System.out.println("Bracing your body, you ram into the wall shoulder first, only to realize with a painful jolt that your actions did more to your shoulder than the gate, which hasn't budged.");
+                        stall();
+                        System.out.println("As you rub your sore shoulder, you suddenly feel the floor beneath you tremble. As a tile in the floor slides open, you realize there's something rising out of the ground.");
+                        stall();
+                        System.out.println("Upon closer inspection, it's a huge ruin sentry, at least three times as large as the stone one at the entrance to the temple.");
+                        stall();
+                        System.out.println("INTRUDER DETECTED. MUST DESTROY. ENGAGING [KHON BATTLE MODE]");
+                        stall();
+                        System.out.println("\"I AM KHON\" the golem bellows. \"YOU HAVE ENTERED FORBIDDEN TERRITORY, AND YOU WILL PAY THE PRICE!\"");
+                        stall();
+                        System.out.println("You've encountered Khon the Stone Wall!");
+                        return 7.2;
+                    }
+                }
+                if (userInput == 2) {
+                    if (Main.getTotalMAttack() >= 12) {
+                        System.out.println("Closing your eyes, you sense the mana around you.");
+                        stall();
+                        System.out.println("Though it's faint, you detect a sense of mana flowing from the wall opposite you.");
+                        stall();
+                        System.out.println("Instinctively, your fingers trace over the wall, and you realize there's a hidden button in the wall.");
+                        stall();
+                        while (true) {
+                            System.out.println("What do you want to do?");
+                            System.out.println("[1] Press the button\t[2] Don't press the button");
+                            userInput = scanner.nextInt();
+                            if (userInput == 1) {
+                                System.out.println("Your curiosity wins over you, and you lean forward to press the button.");
+                                stall();
+                                System.out.println("Suddenly, you feel the room shake as the entire back wall opens up, revealing a shriveled old man.");
+                                stall();
+                                System.out.println("\"Hello?\" you ask");
+                                stall();
+                                System.out.println("The man starts babbling. However, before you can ask him what he's saying, his body erupts with cracks of green light, glowing brighter and brighter until you can barely see anything.");
+                                stall();
+                                System.out.println("Then, the light subsides. In front of you, stands a huge green elemental.");
+                                stall();
+                                System.out.println("\"I AM VOX THE WIND ELEMENTAL!\"");
+                                stall();
+                                System.out.println("Brandishing your weapon, you prepare for a long fight ahead.");
+                                stall();
+                                System.out.println("You've encountered Vox the Wind Elemental!");
+                                return 7.3;
+                            }
+                            if (userInput == 2) {
+                                System.out.println("In the end, you decide not to press the button, instead opting to sit down and ignore the trace of mana instead.");
+                                stall();
+                                System.out.println("As you sit around, you feel an inner sense of peace.");
+                                stall();
+                                System.out.println("Suddenly, you feel the floor beneath you tremble. As a tile in the floor slides open, you realize there's something rising out of the ground.");
+                                stall();
+                                System.out.println("Upon closer inspection, it's a huge ruin sentry, at least three times as large as the stone one at the entrance to the temple.");
+                                stall();
+                                System.out.println("INTRUDER DETECTED. MUST DESTROY. ENGAGING [KHON BATTLE MODE]");
+                                stall();
+                                System.out.println("\"I AM KHON\" the golem bellows. \"YOU HAVE ENTERED FORBIDDEN TERRITORY, AND YOU WILL PAY THE PRICE!\"");
+                                stall();
+                                System.out.println("You've encountered Khon the Stone Wall!");
+                                return 7.21;
+                            }
+
+                        }
+                    }
+                    else {
+                        System.out.println("Closing your eyes, you try to scan the room for any sort of magical traces.");
+                        stall();
+                        System.out.println("However, after a minute or two of searching, you are unable to find any.");
+                        stall();
+                        System.out.println("Deflated, you sag to the floor.");
+                        stall();
+                        System.out.println("Suddenly, you feel the floor beneath you tremble. As a tile in the floor slides open, you realize there's something rising out of the ground.");
+                        stall();
+                        System.out.println("Upon closer inspection, it's a huge ruin sentry, at least three times as large as the stone one at the entrance to the temple.");
+                        stall();
+                        System.out.println("INTRUDER DETECTED. MUST DESTROY. ENGAGING [KHON BATTLE MODE]");
+                        stall();
+                        System.out.println("\"I AM KHON\" the golem bellows. \"YOU HAVE ENTERED FORBIDDEN TERRITORY, AND YOU WILL PAY THE PRICE!\"");
+                        stall();
+                        System.out.println("You've encountered Khon the Stone Wall!");
+                        return 7.2;
+
+                    }
+                }
+                if (userInput == 3) {
+                    System.out.println("Sitting down, you decide to do nothing.");
+                    stall();
+                    System.out.println("As you sit around, you feel an inner sense of peace.");
+                    stall();
+                    System.out.println("Suddenly, you feel the floor beneath you tremble. As a tile in the floor slides open, you realize there's something rising out of the ground.");
+                    stall();
+                    System.out.println("Upon closer inspection, it's a huge ruin sentry, at least three times as large as the stone one at the entrance to the temple.");
+                    stall();
+                    System.out.println("INTRUDER DETECTED. MUST DESTROY. ENGAGING [KHON BATTLE MODE]");
+                    stall();
+                    System.out.println("\"I AM KHON\" the golem bellows. \"YOU HAVE ENTERED FORBIDDEN TERRITORY, AND YOU WILL PAY THE PRICE!\"");
+                    stall();
+                    System.out.println("You've encountered Khon the Stone Wall!");
+                    return 7.21;
+                }
+            }
         }
         return 0;
     }
