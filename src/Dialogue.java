@@ -55,19 +55,17 @@ public class Dialogue {
             stall();
             System.out.println("The game operates on a turn based combat system, where you will be prompted to use letters and numbers to control your character.");
             stall();
-            System.out.println("After a certain amount of enemies are defeated, you will encounter a boss.");
+            System.out.println("As for the stats, all stats are a combination of your weapon's stats and your base character's stats.");
             stall();
-            System.out.println("If you defeat the boss, you will move on to the next location!");
+            System.out.println("Before and after fights, there may also be events that occur. Depending on your choices, the events may have different outcomes for the better or worse.");
             stall();
-            System.out.println("Now, for your character stats.");
+            System.out.println("There are lots of different paths to take, so it is encouraged to be creative and try different routes! You'll never know where you end up.");
             stall();
-            System.out.println("In this game, your character does NOT have an attack stat. This is instead determined by the weapon you are using.");
+            System.out.println("After a certain amount of encounters, you may reach a boss. Bosses are harder enemies with more mechanics and unique skills that aren't shared by any other enemy.");
             stall();
-            System.out.println("You can purchase weapons in between battles!");
+            System.out.println("Defeating the boss, you can get even better rewards that will bring new experiences to the game!");
             stall();
-            System.out.println("As for magic, your mana will increase after every battle, and certain weapons will increase your mana stat too!");
-            stall();
-            System.out.println("Spells can be learnt every so often after boss fights.");
+            System.out.println("A unique mechanic from bosses that must be mentioned is the \"Soulspell\" mechanic. Similar to the fourth spell, which is unique to every different weapon, Soulspells are extra powerful spells that can only be obtained by claiming the soul of a boss.");
             stall();
             System.out.println("Well, that more or less sums up the rules! Press enter to continue.");
             stall();
@@ -100,6 +98,16 @@ public class Dialogue {
         System.out.println("You died!");
         stall();
         System.out.println("Your inner peace level: " + Main.getPeace());
+    }
+    public static void deathRevive() {
+        System.out.println("You fought hard, but you're eventually overrun by the powerful enemy ahead of you...");
+        stall();
+        System.out.println("However, as you feel your conscience fading, your body is suddenly ignited by an inner flame.");
+        stall();
+        System.out.println("Clutching your weapon, you feel resolve rush through your body, memories of your adventure rushing through your brain.");
+        System.out.println("\"It's too late to give up now.\" You think.");
+        stall();
+        System.out.println("You revived!");
     }
     public static void enemyDefeated() {
 
@@ -134,6 +142,32 @@ public class Dialogue {
         System.out.println("Then, Buyaji's body explodes.");
         stall();
         System.out.println("In the ruin of Buyaji's body lies three items.");
+        stall();
+    }
+    public static void voxReward() {
+        System.out.println("With a final attack, you strike down Vox");
+        stall();
+        System.out.println("As you step back, you realize that Vox's body is pulsating with a rapidly growing light. \"How can this be? I am Vox, the wind elemental!\" He screams");
+        stall();
+        System.out.println("Then, just when you think the light can't grow any brighter, his body explodes into a thousand particles that drift away into the wind.");
+        stall();
+        System.out.println("Breathing a sigh of relief, you put down your weapon, knowing that the hard-fought battle is finally over.");
+        stall();
+        System.out.println("That's when you realize there are three items that lie in front of you now.");
+        stall();
+    }
+    public static void khonReward() {
+        System.out.println("With a final attack, you strike down Khon");
+        stall();
+        System.out.println("Creaking and crackling with unstable magical energy, Khon falls down on one knee.");
+        stall();
+        System.out.println("\"Forgive me [REDACTED]... I was unable to sErVE YOU...\" Khon says, before exploding.");
+        stall();
+        System.out.println("Leaping away, you hide behind the pedestals as shrapnel rains everywhere.");
+        stall();
+        System.out.println("When the shower of stone and metals finally ends, you step out from behind the pedestal.");
+        stall();
+        System.out.println("In front of you, in the remains of Khon, lie three items.");
         stall();
     }
     public static void wave4Dialogue() {
@@ -230,6 +264,14 @@ public class Dialogue {
                                     }
                                 }
                             }
+                        }
+                        if (userInput == 3) {
+                            System.out.println("You try sneaking past the sentry...");
+                            stall();
+                            System.out.println("Suddenly, you hear a loud sound behind you: ENEMY DETECTED [Loading Combat Ver 5DX]");
+                            stall();
+                            System.out.println("You've been ambushed by the sentry!");
+                            return 5.3;
                         }
 
                     }
@@ -378,6 +420,13 @@ public class Dialogue {
                     return 7.21;
                 }
             }
+        }
+        if (Main.getWave() == 8) {
+            System.out.println("Turning around one last time, you look back at the temple, which has crumbled to dust during the fight.");
+            System.out.println("You are all too eager to leave that place behind.");
+            stall();
+            System.out.println("Thing");
+            return 8;
         }
         return 0;
     }

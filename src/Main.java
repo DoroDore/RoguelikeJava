@@ -41,10 +41,18 @@ public class Main {
     private static int gthirdSpellCost;
     private static String gfourthSpell;
     private static int gfourthSpellCost;
+    private static String gsoulspell;
+    private static int gsoulspellCost;
+    private static String gsoulspellBoss;
     //All gVars below are related to status effects
     private static int gShadowDance;
     private static int gResidualWinds;
     private static int gBaseDefense;
+    private static int gGaleforce;
+    private static int gManaRegen;
+    private static int gStoneboundStack;
+    private static int gTectonicStack;
+    private static int gPeacekeeperTime;
     //All gVars below are related to specific attacks
     private static int gaerobombCharge = 0;
 
@@ -80,7 +88,9 @@ public class Main {
                 if (Objects.equals(genName, "hStone Sentry")) {
                     System.out.println("You've defeated Stone Sentry!");
                 }
-                System.out.println("You defeated " + genName + "!");
+                else {
+                    System.out.println("You defeated " + genName + "!");
+                }
                 Dialogue.stall();
                 cleanseStatus();
                 rewards();
@@ -109,7 +119,15 @@ public class Main {
                 }
             }
         }
-        Dialogue.death();
+        if (innerPeace >= 3) {
+            Dialogue.deathRevive();
+            gBaseHP = gMaxHP;
+            gBaseMana = gMaxMana;
+            innerPeace = innerPeace - 3;
+        }
+        else {
+            Dialogue.death();
+        }
     }
     private static void createWeapons() {
         Weapon weapon = new Weapon("Sharpened Stick", 5, 0, 0, 0);
@@ -124,8 +142,16 @@ public class Main {
         gWeaponMap.put("ironSword", weapon);
         weapon = new Weapon("Venomspike Maw", 12, 4, 5,3 );
         gWeaponMap.put("venomspikeMaw", weapon);
-        weapon = new Weapon("Wyrmwood Scepter", 5, 7, 15, 1);
+        weapon = new Weapon("Wyrmwood Scepter", 5, 8, 15, 1);
         gWeaponMap.put("wyrmwoodScepter", weapon);
+        weapon = new Weapon("Stormrender", 14, 5, 0, 0);
+        gWeaponMap.put("stormrender", weapon);
+        weapon = new Weapon("Galebound Grimoire", 3, 10, 20, -1);
+        gWeaponMap.put("galeboundGrimoire", weapon);
+        weapon = new Weapon("Stonewrought Maul", 10, 0, 10, 8);
+        gWeaponMap.put("stonewroughtMaul", weapon);
+        weapon = new Weapon("Runebound Earthshaker", 4, 8, 13, 1);
+        gWeaponMap.put("runeboundEarthshaker", weapon);
         gCurrentWeapon = gWeaponMap.get("sharpenedStick");
     }
     private static void rewards() {
@@ -214,6 +240,8 @@ public class Main {
                     Dialogue.stall();
                     System.out.println("You got an Iron Sword!");
                     gCurrentWeapon = gWeaponMap.get("ironSword");
+                    gfirstSpell = "Fortify";
+                    gfirstSpellCost = 3;
                     return;
                 }
                 if (userInput == 2) {
@@ -328,23 +356,112 @@ public class Main {
                     System.out.println("On contact, you feel energy rush through your body, boosting your strength.");
                     System.out.println("You also feel an inner sense of peace.");
                     Dialogue.stall();
-                    System.out.println("You learnt the new skill Buyaji's Wrath!");
-                    System.out.println("Buyaji's Wrath is an extreme skill that deals lethal amounts of damage, at the cost of 0 mana!");
+                    System.out.println("You learnt the new soulspell Eternal Devourer's Grasp!");
+                    System.out.println("Eternal Devourer's Grasp is an extreme skill that when activated, will kill any enemy with an HP less than yours. Once the enemy is defeated, you will heal HP as a result!");
                     Dialogue.stall();
-                    System.out.println("However, if you don't kill the enemy, your HP instantly drops to 1!");
+                    System.out.println("However, if you don't kill the enemy, you will still be able to deal damage. The only downside is your HP will be halved!");
                     Dialogue.stall();
-                    gfourthSpell = "Buyaji's Wrath";
-                    gfourthSpellCost = 0;
+                    gsoulspell = "Eternal Devourer's Grasp";
+                    gsoulspellCost = 15;
+                    gsoulspellBoss = "Buyaji, Eater of Worlds";
                     innerPeace = innerPeace + 3;
                     return;
                 }
             }
         }
         if (Objects.equals(genName, "Vox the Wind Elemental")) {
-            System.out.print("Some stuff happened!");
+            Dialogue.voxReward();
+            Scanner userChoice = new Scanner(System.in);
+            while (true) {
+                System.out.println("Which one do you choose?");
+                System.out.println("[1] Stormrender\t[2] Galebound Grimoire\t[3] Soul of Vox");
+                int choice = userChoice.nextInt();
+                if (choice == 1) {
+                    System.out.println("Walking forward, you claim the Stormrender, and watch as the other two items disintegrate.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new skill Galeforce Surge!");
+                    System.out.println("Each time Galeforce Surge is used, your normal attacks will be empowered by winds generated by Stormrender!");
+                    Dialogue.stall();
+                    gfourthSpell = "Galeforce Surge";
+                    gfourthSpellCost = 4;
+                    gCurrentWeapon = gWeaponMap.get("stormrender");
+                    return;
+                }
+                if (choice == 2) {
+                    System.out.println("Walking forward, you claim the Galebound Grimoire, and watch as the other two items disintegrate.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new skill Zephyr's Veil!");
+                    System.out.println("On top of providing armor, Zephyr's Veil also grants the caster mana regeneration!");
+                    Dialogue.stall();
+                    gfourthSpell = "Zephyr's Veil";
+                    gfourthSpellCost = 20;
+                    gCurrentWeapon = gWeaponMap.get("galeboundGrimoire");
+                    return;
+                }
+                if (choice == 3) {
+                    System.out.println("You choose to claim Vox's rapidly fading soul for yourself.");
+                    Dialogue.stall();
+                    System.out.println("On contact, you feel energy rush through your body, boosting your strength.");
+                    System.out.println("You also feel an inner sense of peace.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new soulspell Soulstorm Convergence!");
+                    System.out.println("Soulstorm Convergence is a powerful spell that scales off of inner peace. If you choose to consume inner peace, it changes the spell and does even more damage!");
+                    Dialogue.stall();
+                    gsoulspell = "Soulstorm Convergence";
+                    gsoulspellCost = 12;
+                    gsoulspellBoss = "Vox the Wind Elemental";
+                    innerPeace = innerPeace + 3;
+                    return;
+
+                }
+            }
         }
         if (Objects.equals(genName, "Khon the Stone Wall")) {
-            System.out.println("BOOM");
+            Dialogue.khonReward();
+            Scanner userChoice = new Scanner(System.in);
+            while (true) {
+                System.out.println("Which one do you choose?");
+                System.out.println("[1] Stonewrought Maul\t[2] Runebound Earthshaker\t[3]Soul of Khon");
+                int choice = userChoice.nextInt();
+                if (choice == 1) {
+                    System.out.println("Walking forward, you claim the Stonewrought Maul, and watch as the other two items disintegrate.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new skill Tectonic Annihilation!");
+                    System.out.println("The skill Tectonic Annihilation has two forms: Seismic Surge and Cataclysmic Quake.");
+                    System.out.println("Seismic Surge allows you to deal damage and gain stacks, while Cataclysmic Quake releases all those stacks to do additional damage.");
+                    Dialogue.stall();
+                    gfourthSpell = "Tectonic Annihilation";
+                    gfourthSpellCost = 5;
+                    gCurrentWeapon = gWeaponMap.get("stonewroughtMaul");
+                    return;
+                }
+                if (choice == 2) {
+                    System.out.println("Walking forward, you claim the Runebound Earthshaker.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new skill Earthen Torrent!");
+                    System.out.println("Earthen Torrent is a spell that unleashes waves of earth and stone to crush enemies. When used, you can continue casting it as long as you have mana to do increased damage!");
+                    Dialogue.stall();
+                    gfourthSpell = "Earthen Torrent";
+                    gfourthSpellCost = 6;
+                    gCurrentWeapon = gWeaponMap.get("runeboundEarthshaker");
+                    return;
+                }
+                if (choice == 3) {
+                    System.out.println("You choose to claim Khon's rapidly fading soul for yourself.");
+                    Dialogue.stall();
+                    System.out.println("On contact, you feel energy rush through your body, boosting your strength.");
+                    System.out.println("You also feel an inner sense of peace.");
+                    Dialogue.stall();
+                    System.out.println("You learnt the new soulspell Peacekeeper's Promise!");
+                    System.out.println("Peacekeeper's Promise is a powerful spell that instantly boosts your stats for three turns, making you nearly invincible. However, if you fail to defeat the enemy within three turns, you'll instantly die. Thus, use it wisely!");
+                    Dialogue.stall();
+                    gsoulspell = "Peacekeeper's Promise";
+                    gsoulspellCost = 0;
+                    gsoulspellBoss = "Khon the Stone Wall";
+                    innerPeace = innerPeace + 3;
+                    return;
+                }
+            }
         }
     }
     private static void createEnemies() {
@@ -362,12 +479,20 @@ public class Main {
         gEnemyMap.put("animatedPuppet", enemy);
         enemy = new Enemy("Ancient Slime", 12, 50);
         gEnemyMap.put("ancientSlime", enemy);
-        enemy = new Enemy("Buyaji, Eater of Worlds", 16, 100);
+        enemy = new Enemy("Buyaji, Eater of Worlds", 17, 100);
         gEnemyMap.put("buyaji", enemy);
-        enemy = new Enemy("Khon the Stone Wall", 12, 150);
+        enemy = new Enemy("Khon the Stone Wall", 13, 150);
         gEnemyMap.put("khon", enemy);
-        enemy = new Enemy("Vox the Wind Elemental", 17, 80);
+        enemy = new Enemy("Vox the Wind Elemental", 18, 80);
         gEnemyMap.put("vox", enemy);
+        enemy = new Enemy("Big Slime", 12, 80);
+        gEnemyMap.put("bigSlime", enemy);
+        enemy = new Enemy ("Chilly Slime", 15, 50);
+        gEnemyMap.put("chillySlime", enemy);
+        enemy = new Enemy ("Frostbite Fiend", 1, 80);
+        gEnemyMap.put("frostbiteFiend", enemy);
+        enemy = new Enemy ("Frostfire Golem", 11, 110);
+        gEnemyMap.put("frostfireGolem", enemy);
         gCurrentEnemy = gEnemyMap.get("blueSlime");
     }
     private static void changeEnemy(double choice) {
@@ -395,12 +520,37 @@ public class Main {
         }
         if (choice == 7.1) {
             gCurrentEnemy = gEnemyMap.get("buyaji");
+            System.out.println("Adrenaline restores your stats!");
+            gBaseHP = gMaxHP;
+            gBaseMana = gMaxMana;
         }
         if (choice == 7.2 || choice == 7.21) {
             gCurrentEnemy = gEnemyMap.get("khon");
+            System.out.println("Adrenaline restores your stats!");
+            gBaseHP = gMaxHP;
+            gBaseMana = gMaxMana;
         }
         if (choice == 7.3) {
             gCurrentEnemy = gEnemyMap.get("vox");
+            System.out.println("Adrenaline restores your stats!");
+            gBaseHP = gMaxHP;
+            gBaseMana = gMaxMana;
+        }
+        if (choice == 8) {
+            Random roll = new Random();
+            int rand = roll.nextInt(4)+1;
+            if (rand == 1) {
+                gCurrentEnemy = gEnemyMap.get("bigSlime");
+            }
+            if (rand == 2) {
+                gCurrentEnemy = gEnemyMap.get("chillySlime");
+            }
+            if (rand == 3) {
+                gCurrentEnemy = gEnemyMap.get("frostbiteFiend");
+            }
+            if (rand == 4) {
+                gCurrentEnemy = gEnemyMap.get("frostfireGolem");
+            }
         }
         genName = gCurrentEnemy.getName();
         genMAttack = gCurrentEnemy.getAttack();
@@ -412,6 +562,9 @@ public class Main {
         gShadowDance = 0;
         gBaseDefense = 0;
         gResidualWinds = 0;
+        gGaleforce = 0;
+        gStoneboundStack = 0;
+        gTectonicStack = 0;
     }
     private static void actions() {
         gwpAttack = gCurrentWeapon.getWeaponAttack();
@@ -422,6 +575,12 @@ public class Main {
         if (gCurrentMana < 0) {
             gCurrentMana = 0;
         }
+        if (gManaRegen > 0) {
+            System.out.println("You regenerated " + gManaRegen + " mana!");
+            gBaseMana = gBaseMana + gManaRegen;
+            gManaRegen = gManaRegen -1;
+            Dialogue.stall();
+        }
         if (gResidualWinds > 0) {
             System.out.println("Residual winds harm you!");
             Dialogue.stall();
@@ -430,6 +589,9 @@ public class Main {
             Dialogue.stall();
         }
         gCurrentMana = add(gwpMana, gBaseMana);
+        if (gCurrentMana < 0) {
+            gCurrentMana = 0;
+        }
         while (true) {
             System.out.println("Your Level: " + gLevel + "\tYour stats:");
             System.out.println("ATK: " + add(gwpAttack, gBaseATK) + "\tMATK: " + add(gwpMAttack,gBaseMATK) + "\tHP: " + gBaseHP + "\tMana: " + gCurrentMana + "\tDefense: " + add(gwpDefense,gBaseDefense) + "\tWeapon: " + wpName);
@@ -437,7 +599,12 @@ public class Main {
             System.out.println("Enemy: " + genName + "\tEnemy Attack: " + genAttack + "\t Enemy HP: " + genHP);
             System.out.println("------------------------------");
             System.out.println("What would you like to do?");
-            System.out.println("[A] To Attack or [S] to Bring up Spells list");
+            if (gsoulspell != null) {
+                System.out.println("[A] To Attack  [S] to Bring up Spells list or [D] to Cast Your Soulspell");
+            }
+            else {
+                System.out.println("[A] To Attack or [S] to Bring up Spells list");
+            }
             Scanner userChoice = new Scanner(System.in);
             String userInput;
             boolean validInput = false;
@@ -446,9 +613,15 @@ public class Main {
                 try {
                     userInput = userChoice.next();
                     userInputUpper = userInput.toUpperCase();
-                    if (userInputUpper.equals("A") || userInputUpper.equals("S")) {
+                    if (gsoulspell != null) {
+                        if (userInputUpper.equals("A") || userInputUpper.equals("S") || userInputUpper.equals("D")) {
+                            validInput = true;
+                        }
+                    }
+                    else if (userInputUpper.equals("A") || userInputUpper.equals("S")) {
                         validInput = true;
-                    } else {
+                    }
+                    else {
                         throw new InputMismatchException();
                     }
                 } catch (InputMismatchException e) {
@@ -458,6 +631,31 @@ public class Main {
             if (userInputUpper.equals("A")) {
                 System.out.println("You swing your " + wpName + "!");
                 Dialogue.stall();
+                if (gGaleforce > 0 && gGaleforce <= 10) {
+                    System.out.println("The Galeforce guides your attack!");
+                    System.out.println("You dealt " + (add(gwpAttack, gBaseATK)+gGaleforce) + " damage!");
+                    Dialogue.stall();
+                    genHP = genHP - (add(gwpAttack, gBaseATK)+gGaleforce);
+                    return;
+                }
+                else if (gGaleforce > 10) {
+                    System.out.println("The Galeforce fully empowers your attack!");
+                    System.out.println("You dealt " + (add(gwpAttack, gBaseATK)+gGaleforce*2) + " damage!");
+                    Dialogue.stall();
+                    genHP = genHP - (add(gwpAttack, gBaseATK)+gGaleforce*2);
+                    return;
+                }
+                if (wpName.equals("Venomspike Maw")) {
+                    Random random = new Random();
+                    int roll = random.nextInt(5)+1;
+                    if (roll == 1) {
+                        System.out.println("You've landed a critical hit!");
+                        System.out.println("You dealt " + (add(gwpAttack, gBaseATK)*2) + " damage!");
+                        Dialogue.stall();
+                        genHP = genHP - (add(gwpAttack, gBaseATK)*2);
+                        return;
+                    }
+                }
                 System.out.println("You dealt " + add(gwpAttack, gBaseATK) + " damage!");
                 Dialogue.stall();
                 genHP = genHP - add(gwpAttack, gBaseATK);
@@ -472,7 +670,7 @@ public class Main {
                     System.out.println("[1] " + gfirstSpell + " - " + gfirstSpellCost + "mp\t[2] Heal - 10mp\t[3] " + gthirdSpell + " - " + gthirdSpellCost + "mp");
                 }
                 else {
-                    System.out.println("[1] " + gfirstSpell + " - " + gfirstSpellCost + "\t[2] Heal - 10mp");
+                    System.out.println("[1] " + gfirstSpell + " - " + gfirstSpellCost + "mp\t[2] Heal - 10mp");
                 }
                 userInput = userChoice.next();
                 if (Objects.equals(userInput, "1") && gCurrentMana >= gfirstSpellCost && Objects.equals(gfirstSpell, "Fireball")) {
@@ -534,7 +732,7 @@ public class Main {
                     }
                 }
                 if (Objects.equals(userInput, "3") && gCurrentMana >= gthirdSpellCost && Objects.equals(gthirdSpell, "Shadow Dance")) {
-                    System.out.println("You used Shadow Dance!");
+                    System.out.println("You use Shadow Dance!");
                     Dialogue.stall();
                     System.out.println("Shadows engulf you as you unleash a flurry of attacks at the enemy, dealing " + (gShadowDance*5+add(gBaseATK,gwpAttack)) + " damage!");
                     Dialogue.stall();
@@ -558,23 +756,27 @@ public class Main {
                                 System.out.println("You dealt " + (add(gBaseATK, gwpAttack)*3) + " damage!");
                                 Dialogue.stall();
                                 genHP = genHP - (add(gBaseATK, gwpAttack)*3);
+                                gBaseMana = gBaseMana - gfourthSpellCost;
+                                return;
                             }
                             else {
                                 System.out.println("You dealt " + (add(gBaseATK, gwpAttack)*2 + " damage!"));
                                 Dialogue.stall();
                                 genHP = genHP - (add(gBaseATK, gwpAttack)*2);
+                                gBaseMana = gBaseMana - gfourthSpellCost;
+                                return;
                             }
                         }
                         else if (gfourthSpell.equals("Wyrmrock Strike")) {
-                            System.out.println("You used Wyrmrock Strike!");
+                            System.out.println("You cast Wyrmrock Strike!");
                             Dialogue.stall();
                             System.out.println("You launch out a series of three attacks!");
                             for (int i = 1; i < 4; i = i+1) {
                                 Random random = new Random();
-                                int roll = random.nextInt(3)+1;
+                                int roll = random.nextInt(5)+1;
                                 System.out.println(genName + " was struck by rock number " + i + "!");
-                                System.out.println("You dealt " + (add(gBaseMATK, gwpMAttack)*3+roll) + " damage!");
-                                genHP = (genHP-add(gBaseMATK, gwpMAttack)*3+roll);
+                                System.out.println("You dealt " + (add(gBaseMATK, gwpMAttack)+roll) + " damage!");
+                                genHP = (genHP-add(gBaseMATK, gwpMAttack)-roll);
                                 roll = random.nextInt(4)+1;
                                 if (roll == 1) {
                                     System.out.println("Rocks solidify around you, increasing your defense!");
@@ -584,24 +786,193 @@ public class Main {
                                 }
                                 Dialogue.stall();
                             }
+                            gBaseMana = gBaseMana - gfourthSpellCost;
+                            return;
                         }
-                        else if (gfourthSpell.equals("Buyaji's Wrath")) {
-                            System.out.println("Calling upon the soul of Buyaji, you call on Buyaji's Wrath!");
+                        else if (gfourthSpell.equals("Galeforce Surge")) {
+                            System.out.println("You use Galeforce Surge!");
                             Dialogue.stall();
-                            System.out.println("You dealt a fatal " + gLevel*15 + " damage!");
+                            System.out.println("You dealt " + (add(gBaseATK, gwpAttack)*2+gLevel*2) + " damage!");
+                            Random random = new Random();
+                            int roll = random.nextInt(4)+1;
+                            System.out.println("Your Galeforce strengthened by " + roll + "!");
+                            gGaleforce = gGaleforce + roll;
+                            genHP = genHP - (add(gBaseATK, gwpAttack)*2+gLevel*2);
                             Dialogue.stall();
-                            if (genHP <= 0) {
-                                genHP = 0;
+                            gBaseMana = gBaseMana - gfourthSpellCost;
+                            return;
+                        }
+                        else if (gfourthSpell.equals("Zephyr's Veil")) {
+                            System.out.println("You cast Zephyr's Veil!");
+                            Dialogue.stall();
+                            System.out.println("You gained " + (add(gwpMAttack,gBaseMATK)/5) + " defense!");
+                            Dialogue.stall();
+                            System.out.println("You gained 4 mana regen!");
+                            gBaseDefense = gBaseDefense + (add(gwpMAttack,gBaseMATK)/5);
+                            gManaRegen = gManaRegen + 4;
+                            gBaseMana = gBaseMana - gfourthSpellCost;
+                            return;
+                        }
+                        else if (gfourthSpell.equals("Tectonic Annihilation")) {
+                            System.out.println("You use Tectonic Annihilation!");
+                            Dialogue.stall();
+                            System.out.println("Do you want to use Seismic Surge or Cataclysmic Quake?");
+                            System.out.println("Current Tectonic Stack(s): " + gTectonicStack);
+                            System.out.println("[S] for Seismic Surge, [C] for Cataclysmic Quake");
+                            userInput = userChoice.next();
+                            userInputUpper = userInput.toUpperCase();
+                            if (userInputUpper.equals("S")) {
+                                System.out.println("You use Tectonic Annihilation: Seismic Surge!");
+                                Dialogue.stall();
+                                System.out.println("The earth tremors with power as you gather your power.");
+                                Dialogue.stall();
+                                System.out.println("You dealt " + (add(gBaseATK, gwpAttack)*2+gLevel) + " damage!");
+                                System.out.println("Your seismic power increased!");
+                                genHP = genHP - (add(gBaseATK, gwpAttack)*2+gLevel);
+                                gTectonicStack = gTectonicStack + 1;
+                                gBaseMana = gBaseMana - gfourthSpellCost;
                                 return;
                             }
-                            System.out.println("The spell casts it's toll on you!");
-                            Dialogue.stall();
-                            System.out.println("You are left on 1HP...");
-                            gBaseHP = 1;
+                            else if (userInputUpper.equals("C") && gTectonicStack != 0) {
+                                System.out.print("You use Tectonic Annihilation: Cataclysmic Quake!");
+                                System.out.println("You discharge all energy, dealing " + ((gLevel+15)*2*gTectonicStack) + " damage!");
+                                Dialogue.stall();
+                                genHP = genHP - ((gLevel+15)*2*gTectonicStack);
+                                gTectonicStack = 0;
+                                gBaseMana = gBaseMana - gfourthSpellCost;
+                                return;
+                            }
+                            else if (userInputUpper.equals("C") && gTectonicStack <= 0) {
+                                System.out.println("You have no Tectonic Stacks!");
+                                System.out.println("You use Tectonic Annihilation: Seismic Surge instead!");
+                                Dialogue.stall();
+                                System.out.println("The earth tremors with power as you gather your power.");
+                                Dialogue.stall();
+                                System.out.println("You dealt " + (add(gBaseATK, gwpAttack)*2+gLevel) + " damage!");
+                                System.out.println("Your seismic power increased!");
+                                genHP = genHP - (add(gBaseATK, gwpAttack)*2+gLevel);
+                                gTectonicStack = gTectonicStack + 1;
+                                gBaseMana = gBaseMana - gfourthSpellCost;
+                                return;
+                            }
                         }
-                        gBaseMana = gBaseMana - gfourthSpellCost;
+                        else if (gfourthSpell.equals("Earthen Torrent")) {
+                            System.out.println("You cast Earthen Torrent!");
+                            int EarthenTorrent = 0;
+                            Dialogue.stall();
+                            System.out.println("A flood of earth and stone torrent the enemy, dealing " + (add(gBaseMATK,gwpMAttack)+EarthenTorrent*gLevel) + " damage!");
+                            genHP = genHP - (add(gBaseMATK,gwpMAttack)+EarthenTorrent);
+                            gBaseMana = gBaseMana - 6;
+                            EarthenTorrent = EarthenTorrent + 1;
+                            while (true) {
+                                if (gCurrentMana >= 6) {
+                                    System.out.println("Do you want to continue the torrent?");
+                                    System.out.println("[Y] for Yes, [N] for No");
+                                    userInput = userChoice.next();
+                                    userInputUpper = userInput.toUpperCase();
+                                    if (userInputUpper.equals("Y")) {
+                                        System.out.println("The torrent continues, dealing an additional " + (add(gBaseMATK,gwpMAttack)+EarthenTorrent*gLevel) + " damage!");
+                                        genHP = genHP - (add(gBaseMATK,gwpMAttack)+EarthenTorrent);
+                                        gBaseMana = gBaseMana - 6;
+                                        EarthenTorrent = EarthenTorrent + 1;
+                                    }
+                                    else {
+                                        System.out.println("The torrent stopped!");
+                                        return;
+                                    }
+                                }
+                                else {
+                                    System.out.println("You ran out of mana, so the torrent stopped!");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        System.out.println("You don't have enough mana!");
+                    }
+                }
+            }
+            else if (userInputUpper.equals("D")) {
+                System.out.println("Your current soulspell is: " + gsoulspell + ", and will cost " + gsoulspellCost + "mp.");
+                System.out.println("Do you want to cast the spell? [Y] for Yes, [N] for No.");
+                userInput = userChoice.next();
+                userInputUpper = userInput.toUpperCase();
+                if (userInputUpper.equals("Y") && gCurrentMana >= gsoulspellCost) {
+                    System.out.println("You call on " + gsoulspellBoss + "'s soul!" );
+                    Dialogue.stall();
+                    if (gsoulspell.equals("Eternal Devourer's Grasp")) {
+                        System.out.println("You use the soulspell " + gsoulspell + "!");
+                        if (genHP < gBaseHP) {
+                            System.out.println("Mechanical tendrils and teeth launched from your hand to grab the enemy, consuming them into an eternal void!");
+                            Dialogue.stall();
+                            System.out.println("The enemy was one shot!");
+                            Dialogue.stall();
+                            System.out.println("You healed " + gLevel*5 + "HP as a result!");
+                            genHP = 0;
+                            gBaseMana = gBaseMana - gsoulspellCost;
+                            return;
+                        }
+                        System.out.println("Mechanical tendrils and teeth are launched from your hand to grab the enemy, but they resist.");
+                        Dialogue.stall();
+                        System.out.println("You were still able to deal " + gLevel*11 + " damage.");
+                        Dialogue.stall();
+                        System.out.println("The spell casts it's toll on you!");
+                        Dialogue.stall();
+                        System.out.println("Your HP has been halved!");
+                        Dialogue.stall();
+                        gBaseHP = gBaseHP/2;
+                        gBaseMana = gBaseMana - gsoulspellCost;
                         return;
                     }
+                    else if (gsoulspell.equals("Soulstorm Convergence")) {
+                        System.out.println("Do you want to consume inner peace?");
+                        System.out.println("Current Inner Peace: " + innerPeace);
+                        System.out.println("[Y] for Yes, [N] for No");
+                        userInput = userChoice.next();
+                        userInputUpper = userInput.toUpperCase();
+                        if (userInputUpper.equals("Y")) {
+                            System.out.println("You draw upon your inner peace to empower your spell.");
+                            Dialogue.stall();
+                            System.out.println("As you channel, huge dark clouds start amassing above your head, rumbling with power strong enough to make the ground shake.");
+                            Dialogue.stall();
+                            System.out.println("You cast Voxian Tempest Ascendance!");
+                            Dialogue.stall();
+                            System.out.println("The enemy is pummeled by winds and struck by lightning, dealing " + innerPeace*25 + " damage!");
+                            Dialogue.stall();
+                            genHP = genHP - innerPeace*25;
+                            innerPeace = innerPeace - 1;
+                            gBaseMana = gBaseMana - gsoulspellCost;
+                            return;
+                        }
+                        else if (userInputUpper.equals("N")) {
+                            System.out.println("Closing your eyes, you channel Vox's soul energy, and see clouds amass above your head. Opening your eyes, you unleash it's fury.");
+                            Dialogue.stall();
+                            System.out.println("You cast Soulstorm Convergence!");
+                            Dialogue.stall();
+                            System.out.println("You dealt " + innerPeace*17 + " damage!");
+                            Dialogue.stall();
+                            genHP = genHP - innerPeace*17;
+                            gBaseMana = gBaseMana - gsoulspellCost;
+                            return;
+                        }
+                    }
+                    else if (gsoulspell.equals("Peacekeeper's Promise")) {
+                        if (gPeacekeeperTime == -1) {
+                            System.out.println("You've already called for power!");
+                        }
+                        else {
+                            System.out.println("You use Peacekeeper's Promise!");
+                            System.out.println("You were granted extreme power by the gods!");
+                            System.out.println("You gained " + gLevel*3 + " ATK!");
+                            System.out.println("You gained " + gLevel+1 + " Defense!");
+                            System.out.println("You have three more turns left to live!");
+                            return;
+                        }
+                    }
+                }
+                else {
+                    System.out.println("You don't have enough mana!");
                 }
             }
         }
@@ -706,6 +1077,29 @@ public class Main {
             }
             if (chance == 3 || chance == 4) {
                 enSpellWindEdge();
+                return;
+            }
+        }
+        if (genName.equals("Khon the Stone Wall")) {
+            if (genHP <= 75) {
+                System.out.println("Khon hums a carefree tune.");
+            }
+            Random attackChoice = new Random();
+            int chance = attackChoice.nextInt(5)+1;
+            if (chance == 1) {
+                enSpellGigaStrike();
+                return;
+            }
+            if (chance == 2) {
+                enSpellShatteringImpact();
+                return;
+            }
+            if (chance == 3) {
+                enSpellStoneboundRenewal();
+                return;
+            }
+            if (chance == 4 && genHP >= 50) {
+                enSpellSunderingVigor();
                 return;
             }
         }
@@ -953,6 +1347,55 @@ public class Main {
         Dialogue.stall();
         System.out.println("You took " + gBaseHP/4 + " damage!");
         gBaseHP = gBaseHP - gBaseHP/4;
+    }
+    private static void enSpellShatteringImpact() {
+        System.out.println(genName + " uses Shattering Impact!");
+        Dialogue.stall();
+        if ((genAttack*2-10) <= add(gwpDefense,gBaseDefense)) {
+            System.out.println("You took no damage!");
+            Dialogue.stall();
+        }
+        else {
+            System.out.println("You took " + ((genAttack*2-10)-add(gwpDefense,gBaseDefense)) + " damage!");
+            gBaseHP = gBaseHP - ((genAttack*2-10)-add(gwpDefense,gBaseDefense));
+        }
+        Random random = new Random();
+        int roll = random.nextInt(2)+1;
+        System.out.println("Shockwaves created by Khon's fists reduce your defense!");
+        System.out.println("You lost " + roll + " defense!");
+        Dialogue.stall();
+        gBaseDefense = gBaseDefense-roll;
+    }
+    private static void enSpellStoneboundRenewal() {
+        System.out.println(genName + " uses Stonebound Renewal!");
+        Dialogue.stall();
+        System.out.println("A pulsating aura of earthy energy envelopes " + genName + " as they channel natrual energy.");
+        Dialogue.stall();
+        Random random = new Random();
+        int roll = 5*(random.nextInt(3)+1);
+        System.out.println(genName + " healed " + (roll+(gStoneboundStack*2)) + "HP!");
+        Dialogue.stall();
+        System.out.println(genName + "'s connection with nature strengthened!");
+        genHP = genHP + (roll+(gStoneboundStack*2));
+        gStoneboundStack = gStoneboundStack + 1;
+        Dialogue.stall();
+    }
+    private static void enSpellSunderingVigor() {
+        System.out.println(genName + " uses Sundering Vigor!");
+        Dialogue.stall();
+        System.out.println(genName + " taps into their inner vitality, sacrificing HP and gaining a surge of power!");
+        Dialogue.stall();
+        System.out.println(genName + " lost 20HP!");
+        System.out.println(genName + " gained 3ATK!");
+        genHP = genHP - 20;
+        genAttack = genAttack + 3;
+        Dialogue.stall();
+    }
+    private static void enSpellChillingWind() {
+        System.out.println("The " + genName + " uses Chilling Wind!");
+        Dialogue.stall();
+        System.out.println("Cold winds pummel you, chilling you to the bone!");
+        System.out.println("The Frigid Aura revitalizes the enemy!");
     }
     /* These are methods generally used either in: 1. Other Classes 2. To help me calculate stats with variables */
     private static int add(int numOne, int numTwo) {
